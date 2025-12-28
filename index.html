@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>Мінігра</title>
+</head>
+<body>
+<div class="casino">
+<div id="balance"></div>
+<div id="result">Нажміть грати</div>
+
+<button id="playBtn">Грати</button>
+</div>
+
+<div id="circle"></div>
+
+<script>
+	// ----- БАЛАНС -----
+	let balance;
+	const savedBalance = localStorage.getItem("balance");
+	if (savedBalance === null) {
+		balance = 100;
+	} else {
+		balance = Number(savedBalance);
+	}
+
+	const balanceEl = document.getElementById("balance");
+	const resultEl = document.getElementById("result");
+	function updateBalance() {
+		balanceEl.textContent = "💰 Баланс: " + balance;
+	}
+	updateBalance();
+
+	// ----- ОСНОВНА ГРА -----
+	const GAME_COST = 10;
+	const WIN_CHANCE = 0.1;
+	const WIN_REWARD = 100;
+
+	document.getElementById("playBtn").onclick = function () {
+		if (balance < GAME_COST) {
+			resultEl.textContent = "Недостатньо коштів!";
+			return;
+		}
+
+		balance -= GAME_COST;
+
+		const win = Math.random() < WIN_CHANCE;
+		if (win) {
+			balance += WIN_REWARD;
+			resultEl.textContent = " WIN!!!";
+		} else {
+			resultEl.textContent = " LOSE!!!";
+		}
+
+		localStorage.setItem("balance", balance);
+		updateBalance();
+	};
+
+	// ----- МІНІГРА З КРУГОМ -----
+	const circle = document.getElementById("circle");
+	let x = 100, y = 100, dx = 2, dy = 1.5;
+
+	function moveCircle() {
+		x += dx;
+		y += dy;
+
+		if (x <= 0 || x >= window.innerWidth - 50) dx *= -1;
+		if (y <= 0 || y >= window.innerHeight - 50) dy *= -1;
+
+		circle.style.left = x + "px";
+		circle.style.top = y + "px";
+	}
+
+	let moveInterval = setInterval(moveCircle, 10);
+
+	circle.onclick = function () {
+		balance += 10;
+		localStorage.setItem("balance", balance);
+		updateBalance();
+		resultEl.textContent = " +10 від мінігри!";
+
+		circle.style.display = "none";
+
+		setTimeout(() => {
+			x = Math.random() * (window.innerWidth - 50);
+			y = Math.random() * (window.innerHeight - 50);
+			circle.style.display = "block";
+		}, 5000);
+	};
+</script>
+
+</body>
+</html>
