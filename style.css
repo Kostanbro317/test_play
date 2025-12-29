@@ -1,5 +1,4 @@
-body {
-	font-size: 30px;
+
 body {
 		margin: 0;
 		height: 100vh;
@@ -28,16 +27,24 @@ body {
 		height: 80px;
 		background: red;
 		border-radius: 50%;
-		position: absolute;
+		position: fixed;
 		cursor: pointer;
+		padding: 20px;
+	    box-sizing: border-box;
+	    touch-action: none;
 	}
+
 	button {
 		margin: 5px;
 		padding: 10px;
 		font-size: 32px;
 		cursor: pointer;
-		background: red;
+		background-color: ff0000;
 		border-radius: 12px;
+	}
+	button :hover{
+		background-color: c90000;
+
 	}
 	.casino {
 		display: flex;
@@ -46,11 +53,11 @@ body {
 
 	}
 	@media (max-width: 599px) {
-		.casino{
-			margin-top: 200px;
-			font-size: 64pxpx;
-			display: flex;
-		    justify-content: center;
-		    align-items: center;
-		}
+	#balance, #result {
+		font-size: 24px;
 	}
+	button {
+		font-size: 18px;
+		padding: 6px 12px;
+	}
+}

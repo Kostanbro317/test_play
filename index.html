@@ -3,15 +3,17 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <link rel="stylesheet" type="text/css" href="style.css">
 <title>Мінігра</title>
 </head>
+
 <body>
 <div class="casino">
-<div id="balance"></div>
-<div id="result">Нажміть грати</div>
-
-<button id="playBtn">Грати</button>
+	<div id="balance"></div>
+	<div id="result">Нажміть грати</div>
+	<button id="playBtn">Грати</button>
 </div>
 
 <div id="circle"></div>
@@ -20,31 +22,28 @@
 	// ----- БАЛАНС -----
 	let balance;
 	const savedBalance = localStorage.getItem("balance");
-	if (savedBalance === null) {
+
+	if (savedBalance === null || isNaN(Number(savedBalance))) {
 		balance = 100;
+		localStorage.setItem("balance", balance);
 	} else {
 		balance = Number(savedBalance);
 	}
 
 	const balanceEl = document.getElementById("balance");
 	const resultEl = document.getElementById("result");
+
 	function updateBalance() {
 		balanceEl.textContent = "💰 Баланс: " + balance;
 	}
 	updateBalance();
-if (savedBalance === null || isNaN(Number(savedBalance))) {
-	balance = 100;
-	localStorage.setItem("balance", balance);
-} else {
-	balance = Number(savedBalance);
-}
 
 	// ----- ОСНОВНА ГРА -----
 	const GAME_COST = 10;
 	const WIN_CHANCE = 0.1;
 	const WIN_REWARD = 100;
 
-	document.getElementById("playBtn").onclick = function () {
+	document.getElementById("playBtn").onclick = () => {
 		if (balance < GAME_COST) {
 			resultEl.textContent = "Недостатньо коштів!";
 			return;
@@ -52,12 +51,11 @@ if (savedBalance === null || isNaN(Number(savedBalance))) {
 
 		balance -= GAME_COST;
 
-		const win = Math.random() < WIN_CHANCE;
-		if (win) {
+		if (Math.random() < WIN_CHANCE) {
 			balance += WIN_REWARD;
-			resultEl.textContent = " WIN!!!";
+			resultEl.textContent = "WIN!!!";
 		} else {
-			resultEl.textContent = " LOSE!!!";
+			resultEl.textContent = "LOSE!!!";
 		}
 
 		localStorage.setItem("balance", balance);
@@ -67,41 +65,63 @@ if (savedBalance === null || isNaN(Number(savedBalance))) {
 	// ----- МІНІГРА З КРУГОМ -----
 	const circle = document.getElementById("circle");
 	let x = 100, y = 100, dx = 2, dy = 1.5;
+	let circleActive = true;
 
-    const size = 80; 
+	function moveCircle() {
+		const rect = circle.getBoundingClientRect();
 
-    function moveCircle() {
-	x += dx;
-	y += dy;
+		x += dx;
+		y += dy;
 
-	const maxX = document.documentElement.clientWidth - size;
-	const maxY = document.documentElement.clientHeight - size;
+		const maxX = document.documentElement.clientWidth - rect.width;
+		const maxY = document.documentElement.clientHeight - rect.height;
 
-	if (x <= 0 || x >= maxX) dx *= -1;
-	if (y <= 0 || y >= maxY) dy *= -1;
+		if (x <= 0) {
+			x = 0;
+			dx *= -1;
+		}
+		if (x >= maxX) {
+			x = maxX;
+			dx *= -1;
+		}
+		if (y <= 0) {
+			y = 0;
+			dy *= -1;
+		}
+		if (y >= maxY) {
+			y = maxY;
+			dy *= -1;
+		}
 
-	circle.style.left = x + "px";
-	circle.style.top = y + "px";
-}
+		circle.style.left = x + "px";
+		circle.style.top = y + "px";
+	}
 
+	setInterval(moveCircle, 16); // ~60 FPS
 
-	let moveInterval = setInterval(moveCircle, 10);
+	function hitCircle(e) {
+		if (!circleActive) return;
+		e.preventDefault();
 
-	circle.onclick = function () {
+		circleActive = false;
 		balance += 10;
 		localStorage.setItem("balance", balance);
 		updateBalance();
-		resultEl.textContent = " +10!";
+		resultEl.textContent = "+10!";
 
 		circle.style.display = "none";
 
 		setTimeout(() => {
-			x = Math.random() * (window.innerWidth - 50);
-			y = Math.random() * (window.innerHeight - 50);
+			const rect = circle.getBoundingClientRect();
+			x = Math.random() * (document.documentElement.clientWidth - rect.width);
+			y = Math.random() * (document.documentElement.clientHeight - rect.height);
 			circle.style.display = "block";
+			circleActive = true;
 		}, 5000);
-	};
-</script>
+	}
 
+	circle.addEventListener("click", hitCircle);
+	circle.addEventListener("touchstart", hitCircle);
+</script>
 </body>
 </html>
