@@ -38,12 +38,12 @@ body {
 		margin: 5px;
 		padding: 10px;
 		font-size: 32px;
-		cursor: pointer;
-		background-color: ff0000;
+		background-color: #ff0000;
 		border-radius: 12px;
 	}
-	button :hover{
-		background-color: c90000;
+	button:hover{
+		background-color: #c90000;
+		cursor: pointer;
 
 	}
 	.casino {
