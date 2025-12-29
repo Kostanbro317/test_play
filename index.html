@@ -62,16 +62,32 @@
 	const circle = document.getElementById("circle");
 	let x = 100, y = 100, dx = 2, dy = 1.5;
 
-	function moveCircle() {
-		x += dx;
-		y += dy;
+	// function moveCircle() {
+	// 	x += dx;
+	// 	y += dy;
 
-		if (x <= 0 || x >= window.innerWidth - 50) dx *= -1;
-		if (y <= 0 || y >= window.innerHeight - 50) dy *= -1;
+	// 	if (x <= 0 || x >= window.innerWidth - 50) dx *= -1;
+	// 	if (y <= 0 || y >= window.innerHeight - 50) dy *= -1;
 
-		circle.style.left = x + "px";
-		circle.style.top = y + "px";
-	}
+	// 	circle.style.left = x + "px";
+	// 	circle.style.top = y + "px";
+	// }
+	const size = 80; // розмір круга
+
+function moveCircle() {
+	x += dx;
+	y += dy;
+
+	const maxX = document.documentElement.clientWidth - size;
+	const maxY = document.documentElement.clientHeight - size;
+
+	if (x <= 0 || x >= maxX) dx *= -1;
+	if (y <= 0 || y >= maxY) dy *= -1;
+
+	circle.style.left = x + "px";
+	circle.style.top = y + "px";
+}
+
 
 	let moveInterval = setInterval(moveCircle, 10);
 
@@ -79,7 +95,7 @@
 		balance += 10;
 		localStorage.setItem("balance", balance);
 		updateBalance();
-		resultEl.textContent = " +10 від мінігри!";
+		resultEl.textContent = " +10!";
 
 		circle.style.display = "none";
 
