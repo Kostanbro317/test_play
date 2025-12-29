@@ -32,6 +32,12 @@
 		balanceEl.textContent = "💰 Баланс: " + balance;
 	}
 	updateBalance();
+if (savedBalance === null || isNaN(Number(savedBalance))) {
+	balance = 100;
+	localStorage.setItem("balance", balance);
+} else {
+	balance = Number(savedBalance);
+}
 
 	// ----- ОСНОВНА ГРА -----
 	const GAME_COST = 10;
@@ -62,19 +68,9 @@
 	const circle = document.getElementById("circle");
 	let x = 100, y = 100, dx = 2, dy = 1.5;
 
-	// function moveCircle() {
-	// 	x += dx;
-	// 	y += dy;
+    const size = 80; 
 
-	// 	if (x <= 0 || x >= window.innerWidth - 50) dx *= -1;
-	// 	if (y <= 0 || y >= window.innerHeight - 50) dy *= -1;
-
-	// 	circle.style.left = x + "px";
-	// 	circle.style.top = y + "px";
-	// }
-	const size = 80; // розмір круга
-
-function moveCircle() {
+    function moveCircle() {
 	x += dx;
 	y += dy;
 
