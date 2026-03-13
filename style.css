@@ -1,12 +1,12 @@
-
 body {
 		margin: 0;
 		height: 100vh;
-		background: #222;
+		background: linear-gradient(135deg, #2b0033, #000000);
 		overflow: hidden;
 		font-family: Arial, sans-serif;
 		color: white;
 	}
+
 	html, body {
 	margin: 0;
 	padding: 0;
@@ -22,7 +22,8 @@ body {
 		justify-content: center;
 		align-items: center;
 	}
-	#circle {
+
+	.circle {
 		width: 80px;
 		height: 80px;
 		background: red;
@@ -32,6 +33,7 @@ body {
 		padding: 20px;
 	    box-sizing: border-box;
 	    touch-action: none;
+	    user-select: none;
 	}
 
 	button {
@@ -41,21 +43,25 @@ body {
 		background-color: #ff0000;
 		border-radius: 12px;
 	}
+
 	button:hover{
 		background-color: #c90000;
 		cursor: pointer;
 
 	}
+
 	.casino {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 
 	}
+
 	@media (max-width: 599px) {
 	#balance, #result {
 		font-size: 24px;
 	}
+
 	button {
 		font-size: 18px;
 		padding: 6px 12px;
@@ -69,6 +75,7 @@ body {
 		background: red;
 		position: fixed;
 	}
+
 	.circle:hover {
 		cursor: pointer;
 		background-color: #c90000;
