@@ -1,22 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Мінігра</title>
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="play.css">
 </head>
 
 <body>
-
+<!-- <button id="resetBtn">тут</button> -->
 <div class="casino">
 	<div id="balance"></div>
 	<div id="result">Нажміть грати</div>
 	<button id="playBtn">Грати</button>
 	<button id="plusCircle"></button>
 </div>
-<button id="resetBtn">Перезапустити</button>
 <script>
 /* ===== БАЛАНС ===== */
 let balance = Number(localStorage.getItem("balance"));
@@ -155,10 +153,10 @@ plusCircleBtn.onclick = () => {
 for (let i = 0; i < circleCount; i++) {
 	createCircle();
 }
-document.getElementById("resetBtn").onclick = () => {
-	localStorage.clear();
-	location.reload();
-};
+// document.getElementById("resetBtn").onclick = () => {
+// 	localStorage.clear();
+// 	location.reload();
+// };
 
 </script>
 
